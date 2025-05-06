@@ -1,51 +1,256 @@
-body,
-html {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
+:root {
+    --primary-bg: #f0f2f5; /* Latar belakang utama seperti WhatsApp/Telegram */
+    --secondary-bg: #ffffff;
+    --header-bg: #6a5acd; /* Warna ungu gosip yang ceria */
+    --header-text: #ffffff;
+    --message-bg-self: #dcf8c6; /* Pesan sendiri */
+    --message-bg-other: #ffffff; /* Pesan orang lain */
+    --text-dark: #333333;
+    --text-light: #555555;
+    --border-color: #e0e0e0;
+    --button-bg: #6a5acd;
+    --button-text: #ffffff;
+    --input-bg: #ffffff;
+    --placeholder-text: #999999;
+    --font-family: 'Poppins', sans-serif;
 }
 
-.chat {
-  padding-top: 40px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-#root {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  overflow-y: auto;
-  height: 100%;
-  /* padding: 10px; */
+html, body {
+    height: 100%;
+    font-family: var(--font-family);
+    background-color: var(--primary-bg);
+    overflow: hidden; /* Mencegah scroll di body utama */
+    color: var(--text-dark);
 }
 
-.message {
-  margin-bottom: 10px;
+#app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Full viewport height */
+    max-width: 100%; /* Untuk desktop agar tidak terlalu lebar jika diinginkan, bisa diatur */
+    margin: 0 auto;
+    background-color: var(--secondary-bg);
+    box-shadow: 0 0 15px rgba(0,0,0,0.1); /* Sedikit bayangan untuk kedalaman */
 }
 
-.message .user {
-  font-weight: bold;
-  text-align: right;
+header {
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    padding: 15px 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 10;
 }
 
-.message .remove {
-  position: absolute;
-  width: 22px;
-  height: 20px;
-  left: -60px;
-  /* display: "block", */
-  display: none;
-  padding: 0;
-  line-height: 18px;
-  border: "none";
+header h1 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    font-weight: 600;
 }
 
-.send-message {
-  padding: 0;
+#room-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9em;
 }
 
-.my-input-text::placeholder {
-  color: #ccc;
+#room-selection label {
+    display: none; /* Sembunyikan label di mobile, placeholder cukup */
+}
+
+#room-name {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 0.9em;
+    flex-grow: 1;
+    max-width: 200px;
+    background-color: var(--input-bg);
+}
+
+#join-room-btn {
+    padding: 8px 15px;
+    background-color: var(--button-text); /* Warna kontras dengan header */
+    color: var(--header-bg);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+#join-room-btn:hover {
+    background-color: #e0e0e0;
+}
+
+#connection-status {
+    font-size: 0.8em;
+    margin-left: 10px;
+    min-width: 70px; /* Ruang untuk status "Connecting..." */
+}
+
+
+#chat-window {
+    flex-grow: 1; /* Mengisi sisa ruang */
+    overflow-y: auto; /* Scroll hanya untuk area pesan */
+    padding: 15px;
+    background-color: var(--primary-bg); /* Latar belakang area chat */
+    display: flex;
+    flex-direction: column-reverse; /* Pesan baru muncul di bawah dan scroll dari bawah */
+}
+
+#messages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Jarak antar pesan */
+}
+
+.message-item {
+    display: flex;
+    max-width: 75%; /* Pesan tidak terlalu lebar */
+    word-wrap: break-word;
+}
+
+.message-item.self {
+    align-self: flex-end; /* Pesan sendiri di kanan */
+}
+
+.message-item.other {
+    align-self: flex-start; /* Pesan orang lain di kiri */
+}
+
+.message-content {
+    padding: 10px 15px;
+    border-radius: 18px;
+    font-size: 0.95em;
+    line-height: 1.4;
+}
+
+.message-item.self .message-content {
+    background-color: var(--message-bg-self);
+    border-bottom-right-radius: 5px; /* Sedikit variasi bentuk bubble */
+    color: var(--text-dark);
+}
+
+.message-item.other .message-content {
+    background-color: var(--message-bg-other);
+    border-bottom-left-radius: 5px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    color: var(--text-dark);
+}
+
+.message-user {
+    display: block;
+    font-size: 0.75em;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--header-bg); /* Samakan dengan warna header untuk konsistensi */
+}
+.message-item.self .message-user {
+    /* text-align: right; */ /* Bisa ditambahkan jika ingin nama pengguna di kanan juga */
+    color: #5a8c49; /* Warna user untuk pesan sendiri */
+}
+
+
+.message-content p {
+    margin: 0;
+}
+
+.message-timestamp {
+    display: block;
+    font-size: 0.7em;
+    color: var(--text-light);
+    margin-top: 5px;
+    text-align: right;
+}
+.message-item.other .message-timestamp {
+    text-align: left;
+}
+
+footer {
+    background-color: var(--secondary-bg);
+    padding: 10px 15px;
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+}
+
+#message-input-area {
+    display: flex;
+    align-items: flex-end; /* Agar tombol sejajar dengan baris terakhir textarea */
+    gap: 10px;
+}
+
+#message-input {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    font-size: 1em;
+    resize: none; /* Mencegah user mengubah ukuran textarea */
+    background-color: var(--input-bg);
+    max-height: 100px; /* Batasi tinggi maksimal textarea */
+    overflow-y: auto; /* Scroll jika teks banyak */
+    line-height: 1.4;
+}
+
+#message-input::placeholder {
+    color: var(--placeholder-text);
+}
+
+#send-button {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+    border: none;
+    border-radius: 50%; /* Tombol bulat */
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0; /* Mencegah tombol menyusut */
+}
+
+#send-button:hover {
+    background-color: #5949b2; /* Warna lebih gelap saat hover */
+}
+
+#send-button svg {
+    width: 24px;
+    height: 24px;
+}
+
+.credits {
+    text-align: center;
+    font-size: 0.75em;
+    color: var(--text-light);
+    margin-top: 8px;
+}
+
+/* Responsive untuk Desktop atau layar lebih besar */
+@media (min-width: 768px) {
+    #app-container {
+        max-width: 700px; /* Batasi lebar maksimum di desktop agar tidak terlalu stretched */
+        height: 90vh; /* Sedikit lebih kecil dari viewport */
+        max-height: 800px; /* Batas tinggi maksimum */
+        border-radius: 8px; /* Sudut membulat di desktop */
+        margin: 5vh auto; /* Tengah secara vertikal dan horizontal */
+    }
+
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    #room-selection label {
+        display: inline; /* Tampilkan label di desktop */
+    }
 }
