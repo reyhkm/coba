@@ -1,48 +1,59 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Basic Page Needs
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <meta charset="utf-8" />
-    <title>Chat!</title>
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gossip Kantor</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app-container">
+        <header>
+            <h1>🤫 Gossip Kantor</h1>
+            <div id="room-selection">
+                <label for="room-name">Pilih Ruangan:</label>
+                <input type="text" id="room-name" value="gosip-umum" placeholder="Nama Ruangan Gosip">
+                <button id="join-room-btn">Gabung</button>
+                <span id="connection-status"></span>
+            </div>
+        </header>
 
-    <!-- Mobile Specific Metas
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <main id="chat-window">
+            <div id="messages-list">
+                <!-- Pesan akan muncul di sini -->
+                <!-- <div class="message-item self">
+                    <div class="message-content">
+                        <span class="message-user">You</span>
+                        <p>Ini pesan saya, tes tes!</p>
+                        <span class="message-timestamp">10:00 AM</span>
+                    </div>
+                </div>
+                <div class="message-item other">
+                    <div class="message-content">
+                        <span class="message-user">Teman Gosip</span>
+                        <p>Oh ya? Ada gosip apa nih?</p>
+                        <span class="message-timestamp">10:01 AM</span>
+                    </div>
+                </div> -->
+            </div>
+        </main>
 
-    <!-- FONT
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-
-    <!-- CSS
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="stylesheet" href="css/normalize.css" />
-    <link rel="stylesheet" href="css/skeleton.css" />
-    <link rel="stylesheet" href="styles.css" />
-
-    <!-- Favicon
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="icon" type="image/ico" href="favicon.ico" />
-    <script src="/dist/index.js" type="module" nonce="ODg1NjEyNzQyLDE4NDk4MjQ0NjU="></script>
-  </head>
-  <body>
-    <!-- Primary Page Layout
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <div class="container" style="width: 95%; height: 100%">
-      <div class="row" style="height: 100%">
-        <div class="one-third column" style="margin-top: 25%">
-          <h4><b>Chat</b>, powered by Durable Objects</h4>
-          <p>
-            This chat room is hosted in a single Durable Object, running in one
-            process in one machine in one location, very close to the users.
-          </p>
-        </div>
-        <div class="two-thirds column" id="root"></div>
-      </div>
+        <footer>
+            <div id="message-input-area">
+                <textarea id="message-input" placeholder="Ketik gosipmu di sini..." rows="1"></textarea>
+                <button id="send-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                        <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
+                    </svg>
+                </button>
+            </div>
+            <p class="credits">Made by Hikam with 🤫</p>
+        </footer>
     </div>
 
-    <!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  </body>
+    <script src="script.js"></script>
+</body>
 </html>
